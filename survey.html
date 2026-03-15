@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHOS - 만족도 조사</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/app.js"></script>
+    <style>
+        .form-box {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .q-box {
+            margin-bottom: 24px;
+        }
+
+        .q-label {
+            font-weight: 600;
+            margin-bottom: 12px;
+            display: block;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 12px;
+            justify-content: space-between;
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .radio-group label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .radio-group input {
+            margin-bottom: 4px;
+            accent-color: var(--primary);
+        }
+
+        .res-highlight {
+            font-style: italic;
+            color: #4b5563;
+            border-left: 4px solid var(--primary);
+            padding-left: 16px;
+            margin: 16px 0;
+            font-size: 1.05rem;
+        }
+
+        #result-view {
+            display: none;
+        }
+
+        #loader {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar" id="sidebar"></div>
+        <div class="main-area">
+            <div class="topbar" id="topbar"></div>
+
+            <div class="page-content">
+                <div id="survey-form" class="form-box">
+                    <h2 class="text-center" style="margin-bottom: 8px;">📊 만족도 테스트 및 결과</h2>
+                    <p class="text-center text-gray" style="margin-bottom: 16px;">이번 시뮬레이션 경험은 어떠셨나요? 아래 항목을 평가해주세요.</p>
+                    <div class="text-center" style="font-size: 0.8rem; color: #6b7280; margin-bottom: 8px;">(1=매우 불만족 ~
+                        5=매우 만족)</div>
+                    <form onsubmit="submitSurvey(event)">
+                        <div class="q-box">
+                            <span class="q-label">Q1. 이번 시뮬레이션 경험이 전반적으로 만족스러우셨나요?</span>
+                            <div class="radio-group" id="q1">
+                                <label><input type="radio" name="q1" value="1" required>1점</label>
+                                <label><input type="radio" name="q1" value="2">2점</label>
+                                <label><input type="radio" name="q1" value="3">3점</label>
+                                <label><input type="radio" name="q1" value="4">4점</label>
+                                <label><input type="radio" name="q1" value="5" checked>5점</label>
+                            </div>
+                        </div>
+                        <div class="q-box">
+                            <span class="q-label">Q2. 사전 교육 영상이 시뮬레이션을 이해하는 데 도움이 됐나요?</span>
+                            <div class="radio-group" id="q2">
+                                <label><input type="radio" name="q2" value="1" required>1점</label><label><input
+                                        type="radio" name="q2" value="2">2점</label><label><input type="radio" name="q2"
+                                        value="3">3점</label><label><input type="radio" name="q2" value="4"
+                                        checked>4점</label><label><input type="radio" name="q2" value="5">5점</label>
+                            </div>
+                        </div>
+                        <div class="q-box">
+                            <span class="q-label">Q3. 시나리오의 난이도는 적절했나요?</span>
+                            <div class="radio-group" id="q3">
+                                <label><input type="radio" name="q3" value="1" required>1점</label><label><input
+                                        type="radio" name="q3" value="2">2점</label><label><input type="radio" name="q3"
+                                        value="3" checked>3점</label><label><input type="radio" name="q3"
+                                        value="4">4점</label><label><input type="radio" name="q3" value="5">5점</label>
+                            </div>
+                        </div>
+                        <div class="q-box">
+                            <span class="q-label">Q4. 이 시뮬레이션을 통해 AI 윤리에 대해 새롭게 배운 점이 있었나요?</span>
+                            <div class="radio-group" id="q4">
+                                <label><input type="radio" name="q4" value="1" required>1점</label><label><input
+                                        type="radio" name="q4" value="2">2점</label><label><input type="radio" name="q4"
+                                        value="3">3점</label><label><input type="radio" name="q4" value="4"
+                                        checked>4점</label><label><input type="radio" name="q4" value="5">5점</label>
+                            </div>
+                        </div>
+                        <div class="q-box">
+                            <span class="q-label">Q5. 다른 시나리오도 도전해보고 싶으신가요?</span>
+                            <div class="radio-group" id="q5">
+                                <label><input type="radio" name="q5" value="1" required>1점</label><label><input
+                                        type="radio" name="q5" value="2">2점</label><label><input type="radio" name="q5"
+                                        value="3" checked>3점</label><label><input type="radio" name="q5"
+                                        value="4">4점</label><label><input type="radio" name="q5" value="5">5점</label>
+                            </div>
+                        </div>
+
+                        <div class="q-box">
+                            <span class="q-label">💬 개선점 서술형 (선택)</span>
+                            <textarea id="feedback"
+                                style="width: 100%; height: 100px; padding: 12px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; resize: none;"
+                                placeholder="이번 시뮬레이션에서 아쉬웠던 점이나 개선됐으면 하는 점을 자유롭게 적어주세요. (선택사항 — 작성하지 않아도 결과를 확인할 수 있어요)"></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary"
+                            style="width: 100%; padding: 14px; font-size: 1.05rem; margin-top: 10px;">결과 보기 및 제출
+                            →</button>
+                    </form>
+                </div>
+
+                <div id="loader">
+                    <div class="spinner"></div>
+                    <p style="color:var(--text-muted); font-weight:500;">대화 내용을 분석 중입니다...</p>
+                </div>
+
+                <div id="result-view" class="form-box">
+                    <h2 style="color:var(--primary); margin-bottom: 24px;">✅ 시나리오 시뮬레이션 결과</h2>
+                    <div class="card mb-4" style="background:#f9fafb;">
+                        <h4>💬 결정적 한 마디</h4>
+                        <div class="res-highlight" id="r-quote">"..."</div>
+                        <div style="font-size: 0.95rem; color: #666;"><b>이유:</b> <span id="r-reason">분석 중...</span>
+                        </div>
+                    </div>
+
+                    <div class="card mb-4">
+                        <h4 id="r-style-title" style="color:var(--primary);">🛡️ 나의 설득 스타일: 분석 중</h4>
+                        <p id="r-style-desc" class="mt-4 text-gray" style="line-height:1.6;"></p>
+                    </div>
+
+                    <div style="display: flex; gap: 12px; justify-content: center; margin-top: 32px;">
+                        <button class="btn btn-secondary" style="padding: 14px 20px;"
+                            onclick="window.location.href='chatbot.html'">🔄 다른 시나리오 도전하기</button>
+                        <button class="btn btn-primary" style="padding: 14px 20px;" onclick="goOutro()">📄 수료증 확인 및 마무리
+                            →</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function submitSurvey(e) {
+            e.preventDefault();
+            const feedback = document.getElementById('feedback').value;
+
+            document.getElementById('survey-form').style.display = 'none';
+            document.getElementById('loader').style.display = 'block';
+
+            const historyStrRaw = localStorage.getItem('ethos_chat_history');
+            const scenarioName = localStorage.getItem('ethos_active_scenario') || '알 수 없는 시나리오';
+            let historyText = "대화 기록 없음";
+
+            if (historyStrRaw) {
+                try {
+                    const arr = JSON.parse(historyStrRaw);
+                    // 시스템 메시지 제외 및 가독성 개선
+                    historyText = arr
+                        .filter(m => m.role !== 'system')
+                        .map(m => `${m.role === 'user' ? '사용자' : '상대방'}: ${m.content}`)
+                        .join('\n');
+                } catch (err) { }
+            }
+
+            const sysPrompt = `당신은 AI 윤리 교육 시뮬레이션의 결과 분석 전문가입니다.
+사용자와 페르소나의 전체 대화 기록을 깊이 있게 분석하여 다음 JSON 형식으로 응답하세요.
+
+1. "highlight": 사용자가 페르소나의 태도를 변화시키는 데 가장 결정적이었던 '사용자 자신의 발언' 한 문장을 '있는 그대로' 정확히 발췌하고, 그 이유를 윤리적/논리적 관점에서 설명하세요.
+2. "persuasion_type": 사용자의 전체적인 설득 스타일을 다음 6가지 중 하나로 정교하게 분류하세요.
+   - 증거 제시형: 실제 사건, 법조항 등 객관적 자료를 근거로 설득함
+   - 공감 유도형: 상대방의 처지나 사회적 파장을 우려하며 감성적으로 접근함
+   - 질문 유도형: 질문을 통해 상대방이 스스로 모순을 깨닫게 함
+   - 원칙 강조형: 회사의 규정이나 윤리적 가치 그 자체를 강조함
+   - 리스크 경고형: 발생할 수 있는 금전적, 법적, 평판 손실을 강조함
+   - 관계 기반형: 사수-부사수 등 인간관계를 활용해 감화시킴
+3. "persuasion_type.description": 선정된 유형에 대한 설명과 함께, 사용자가 대화 중에 보여준 구체적인 예시를 들어 칭찬하거나 보완점을 제안하세요 (3문장 내외).
+
+반드시 아래 JSON 구조만 엄격히 지켜 응답하세요:
+{
+  "highlight": { "quote": "...", "reason": "..." },
+  "persuasion_type": { "label": "...", "emoji": "...", "description": "..." }
+}`;
+
+            const userPrompt = `
+[시나리오]
+${scenarioName}
+
+[대화 기록]
+${historyText}
+
+[기타 의견]
+${feedback || "없음"}
+`;
+
+            try {
+                const res = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model: "gpt-4o-mini",
+                        messages: [
+                            { role: "system", content: sysPrompt },
+                            { role: "user", content: userPrompt }
+                        ],
+                        temperature: 0.7,
+                        response_format: { type: "json_object" }
+                    })
+                });
+
+                if (!res.ok) throw new Error("API Fails");
+                const dataRaw = await res.json();
+                const obj = JSON.parse(dataRaw.choices[0].message.content);
+
+                document.getElementById('r-quote').innerText = `"${obj.highlight.quote}"`;
+                document.getElementById('r-reason').innerText = obj.highlight.reason;
+                document.getElementById('r-style-title').innerText = `${obj.persuasion_type.emoji} 나의 설득 스타일: ${obj.persuasion_type.label}`;
+                document.getElementById('r-style-desc').innerText = obj.persuasion_type.description;
+
+            } catch (e) {
+                console.error(e);
+                document.getElementById('r-quote').innerText = `"훌륭한 논리적 접근이었습니다."`;
+                document.getElementById('r-reason').innerText = `내부 분석 로직 동작 오류. 통신에 문제가 발생했습니다.`;
+                document.getElementById('r-style-title').innerText = `🛡️ 나의 설득 스타일: 리스크 경고형`;
+                document.getElementById('r-style-desc').innerText = `문제가 잠재하고 있는 리스크를 잘 파악하여 어필했습니다.`;
+            }
+
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('result-view').style.display = 'block';
+        }
+
+        function goOutro() {
+            State.setStage(4);
+            window.location.href = 'outro.html';
+        }
+    </script>
+</body>
+
+</html>

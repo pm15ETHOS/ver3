@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHOS - 소개</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/app.js"></script>
+    <style>
+        .feature-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .flow-box {
+            background-color: #f0fcf9;
+            border: 1px solid #bfece4;
+            border-radius: 12px;
+            padding: 24px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .flow-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            color: #555;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .flow-item {
+            background: white;
+            padding: 12px 24px;
+            border-radius: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            font-weight: 500;
+        }
+
+        ul {
+            margin-left: 20px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        ul li {
+            margin-bottom: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar"></div>
+
+        <!-- Main -->
+        <div class="main-area">
+            <div class="topbar" id="topbar"></div>
+
+            <div class="page-content">
+                <div class="text-center">
+                    <h2 style="font-size: 1.8rem; margin-bottom: 8px;">AI 윤리 시뮬레이션 교육</h2>
+                    <h4 class="text-gray" style="font-weight: normal; margin-bottom: 16px;">Ethics Training for
+                        Harmonious Organizational Systems</h4>
+                    <p class="text-gray">AI 윤리에 대한 체계적인 학습과 실전 시뮬레이션을 통해 윤리적 AI 활용 역량을 키워보세요.</p>
+                </div>
+
+                <div class="feature-grid">
+                    <div class="card">
+                        <h4 style="color:var(--primary);">📖 체계적인 교육 커리큘럼</h4>
+                        <p class="mt-4 text-gray" style="font-size:0.95rem;">AI 윤리의 핵심 개념부터 실무 적용까지 단계별로 학습합니다.</p>
+                        <ul>
+                            <li>AI 윤리 기본 개념 및 원칙</li>
+                            <li>프라이버시 및 정보보호</li>
+                            <li>알고리즘 편향 및 할루시네이션</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color:var(--primary);">👥 실전 시나리오 시뮬레이션</h4>
+                        <p class="mt-4 text-gray" style="font-size:0.95rem;">실제 업무 상황을 가정한 5가지 윤리 시나리오로 실습합니다.</p>
+                        <ul>
+                            <li>채용 과정에서의 AI 편향 문제</li>
+                            <li>내부 데이터 노출 위험 상황</li>
+                            <li>AI 코드 검증 및 안전성 확보</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color:var(--primary);">🎯 인터랙티브 학습</h4>
+                        <p class="mt-4 text-gray" style="font-size:0.95rem;">다양한 페르소나와의 대화를 통해 설득 능력을 키웁니다.</p>
+                        <ul>
+                            <li>랜덤 배정을 통한 공정한 학습 경험</li>
+                            <li>4-5턴의 논리적 설득 대화</li>
+                            <li>실시간 피드백 및 평가</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4 style="color:var(--primary);">🛡️ 체계적인 학습 관리</h4>
+                        <p class="mt-4 text-gray" style="font-size:0.95rem;">진행 상황을 추적하고 이수증을 발급받으세요.</p>
+                        <ul>
+                            <li>학습 진행률 실시간 확인</li>
+                            <li>만족도 조사 및 피드백</li>
+                            <li>교육 수료증 발급</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="flow-box">
+                    <h4 style="margin-bottom:10px;">학습 플로우</h4>
+                    <div class="flow-items">
+                        <div class="flow-item"><span style="font-weight:bold; margin-right:6px;">1</span> AI 윤리 교육 영상
+                        </div>
+                        <div>➔</div>
+                        <div class="flow-item"><span style="font-weight:bold; margin-right:6px;">2</span> 시나리오 시뮬레이터
+                        </div>
+                        <div>➔</div>
+                        <div class="flow-item"><span style="font-weight:bold; margin-right:6px;">3</span> 만족도 테스트</div>
+                        <div>➔</div>
+                        <div class="flow-item"><span style="font-weight:bold; margin-right:6px;">4</span> 수료증 발급</div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <button class="btn btn-primary" style="padding: 14px 40px; font-size: 1.1rem;"
+                        onclick="startLearning()">학습 시작하기 →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function startLearning() {
+            State.setStage(1);
+            localStorage.setItem('ethos_video_idx', '0');
+            window.location.href = 'video.html';
+        }
+    </script>
+</body>
+
+</html>

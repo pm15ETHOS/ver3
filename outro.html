@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHOS - 교육 완료</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/app.js"></script>
+    <style>
+        .cert-box {
+            max-width: 600px;
+            margin: 40px auto;
+            border: 8px solid #f3f4f6;
+            padding: 40px;
+            text-align: center;
+            background: white;
+            border-radius: 4px;
+            position: relative;
+        }
+
+        .cert-box::before {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 4px;
+            right: 4px;
+            bottom: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .cert-badge {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+        .standards-container {
+            max-width: 1000px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
+        .standards-header {
+            background: #1e293b;
+            color: white;
+            padding: 16px 24px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .standards-grid {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            padding: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .standards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .standard-card {
+            border: 1px solid #f1f5f9;
+            border-radius: 12px;
+            padding: 24px;
+            display: flex;
+            gap: 16px;
+            transition: transform 0.2s;
+        }
+
+        .standard-card:hover {
+            transform: translateY(-2px);
+            border-color: #e2e8f0;
+        }
+
+        .icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+        }
+
+        .standard-title {
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+            color: #0f172a;
+        }
+
+        .standard-desc {
+            font-size: 0.9rem;
+            color: #64748b;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <div class="sidebar" id="sidebar"></div>
+        <div class="main-area">
+            <div class="topbar" id="topbar"></div>
+
+            <div class="page-content">
+                <div class="text-center" style="margin-top:20px;">
+                    <h2 style="color:var(--primary); margin-bottom: 8px;">🎉 교육 수료 완료</h2>
+                    <p class="text-gray">모든 과정을 성공적으로 수료하셨습니다. 수고하셨습니다!</p>
+                </div>
+
+                <div class="cert-box">
+                    <div class="cert-badge">🔖</div>
+                    <h1 style="margin-bottom: 10px; font-size: 2.2rem; letter-spacing: 4px;">수료증</h1>
+                    <p style="color:#666; margin-bottom: 40px;">Certificate of Completion</p>
+
+                    <h3 id="c-name"
+                        style="font-size: 1.5rem; margin-bottom: 8px; border-bottom: 1px solid #333; display: inline-block; padding: 0 40px 10px;">
+                        홍길동</h3>
+                    <p id="c-dept" style="color:var(--text-muted); margin-bottom: 30px;">연구개발본부</p>
+
+                    <p style="line-height: 1.6; color:#444; margin-bottom: 40px;">
+                        위 사람은 ETHOS AI 윤리 교육의 모든 과정을<br>
+                        성실히 수료하였기에 이 증서를 수여합니다.
+                    </p>
+
+                    <div style="font-weight: 600; color:var(--primary); font-size: 1.2rem;">
+                        ETHOS AI Ethics Center
+                    </div>
+                </div>
+
+                <!-- AI Ethics 10 Standards -->
+                <div class="standards-container">
+                    <div class="standards-header">
+                        💡 실무에 적용하는 AI 윤리 10대 기준
+                    </div>
+                    <div class="standards-grid">
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #e6fffa; color: #319795;">👥</div>
+                            <div>
+                                <div class="standard-title">인권 보장</div>
+                                <div class="standard-desc">AI는 인간의 권리와 자유를 존중하고 보호해야 하며, 차별이나 편견을 조장하지 않아야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #ebf8ff; color: #3182ce;">🛡️</div>
+                            <div>
+                                <div class="standard-title">프라이버시 보호</div>
+                                <div class="standard-desc">개인정보는 철저히 보호되어야 하며, 동의 없이 수집·활용되어서는 안 됩니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #faf5ff; color: #805ad5;">📄</div>
+                            <div>
+                                <div class="standard-title">투명성 확보</div>
+                                <div class="standard-desc">AI 시스템의 의사결정 과정은 이해 가능하고 설명 가능해야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #f0fff4; color: #38a169;">🎯</div>
+                            <div>
+                                <div class="standard-title">공정성 유지</div>
+                                <div class="standard-desc">AI는 특정 집단에 불리하지 않도록 공정하게 설계되고 운영되어야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #fffaf0; color: #dd6b20;">✅</div>
+                            <div>
+                                <div class="standard-title">책임성 명확화</div>
+                                <div class="standard-desc">AI로 인한 결과에 대해 명확한 책임 소재가 있어야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #fff5f5; color: #e53e3e;">🛡️</div>
+                            <div>
+                                <div class="standard-title">안전성 보장</div>
+                                <div class="standard-desc">AI 시스템은 예측 가능하고 안전하게 작동해야 하며, 위험을 최소화해야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #eef2ff; color: #4f46e5;">📊</div>
+                            <div>
+                                <div class="standard-title">데이터 품질</div>
+                                <div class="standard-desc">AI 학습에 사용되는 데이터는 정확하고 대표성을 가져야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #fdf2f8; color: #db2777;">✨</div>
+                            <div>
+                                <div class="standard-title">사회적 가치</div>
+                                <div class="standard-desc">AI는 사회적 편익을 증진하고 공공선에 기여해야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #f7fee7; color: #65a30d;">🌿</div>
+                            <div>
+                                <div class="standard-title">지속 가능성</div>
+                                <div class="standard-desc">AI 개발과 활용은 환경적·사회적 지속 가능성을 고려해야 합니다.</div>
+                            </div>
+                        </div>
+                        <div class="standard-card">
+                            <div class="icon-box" style="background: #fffbeb; color: #d97706;">🔑</div>
+                            <div>
+                                <div class="standard-title">거버넌스 구축</div>
+                                <div class="standard-desc">AI 윤리를 실현하기 위한 조직 내 체계와 정책이 마련되어야 합니다.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center" style="margin-bottom: 60px;">
+                    <button class="btn btn-secondary" onclick="State.logout()">처음으로 돌아가기</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const user = State.getUser();
+            if (user) {
+                document.getElementById('c-name').innerText = user.name;
+                document.getElementById('c-dept').innerText = user.dept;
+            }
+        });
+    </script>
+</body>
+
+</html>
