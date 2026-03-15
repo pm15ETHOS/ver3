@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHOS - 관리자 대시보드</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/app.js"></script>
+    <style>
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 24px; }
+        .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; margin-bottom: 24px; }
+        .stat-card { text-align: center; }
+        .stat-card h3 { color: var(--text-muted); font-size: 1rem; margin-bottom: 8px; }
+        .stat-card h1 { color: var(--primary); font-size: 2.2rem; margin-bottom: 4px; }
+        .stat-card span { font-size: 0.85rem; color: #888; }
+        
+        .box { background: #f9fafb; padding: 24px; border-radius: 12px; }
+        .box h4 { margin-bottom: 16px; color: var(--text-main); font-size: 1.05rem; border-bottom: 1px solid var(--border-color); padding-bottom: 12px; }
+        .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.95rem; }
+        
+        .bar-wrap { width: 120px; background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; background: #009b84; }
+        .bar-fill.warn { background: #f59e0b; }
+        .bar-fill.danger { background: #ef4444; }
+        
+        .chart-circle {
+            width: 140px; height: 140px; border-radius: 50%; margin: 0 auto;
+            background: conic-gradient(
+                #3b82f6 0% 35%, 
+                #ef4444 35% 60%, 
+                #f59e0b 60% 75%, 
+                #10b981 75% 87%, 
+                #8b5cf6 87% 95%, 
+                #4b5563 95% 100%
+            );
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Always hide sidebar for admin, or render empty -->
+        <div class="main-area" style="width: 100%;">
+            <div class="topbar" id="topbar"></div>
+            
+            <div class="page-content" style="max-width: 1100px; margin: 0 auto;">
+                <h2 style="margin-bottom: 8px;">HR 관리자 대시보드</h2>
+                <p class="text-gray" style="margin-bottom: 32px;">전사 AI 윤리 교육 이수 및 시뮬레이션 평가 현황입니다. (가이드라인 및 예시 데이터)</p>
+                
+                <div class="grid-3">
+                    <div class="card stat-card">
+                        <h3>전체 이수율</h3>
+                        <h1>68%</h1>
+                        <span>(34 / 50명)</span>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>평균 만족도</h3>
+                        <h1>4.2 / 5</h1>
+                        <span>전사 평균 (최근 30일)</span>
+                    </div>
+                    <div class="card stat-card">
+                        <h3>인기 시나리오</h3>
+                        <h2 style="color: var(--primary); margin: 10px 0;">AI 채용 편향</h2>
+                        <span>완료율 82%</span>
+                    </div>
+                </div>
+                
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="box">
+                            <h4>🏢 팀별 이수 현황</h4>
+                            <div class="row"><span>개발 A팀</span><div style="display:flex; align-items:center; gap:10px;"><div class="bar-wrap"><div class="bar-fill warn" style="width:60%;"></div></div> <span>60%</span></div></div>
+                            <div class="row"><span>개발 B팀</span><div style="display:flex; align-items:center; gap:10px;"><div class="bar-wrap"><div class="bar-fill" style="width:100%;"></div></div> <span>100%</span></div></div>
+                            <div class="row"><span>데이터팀</span><div style="display:flex; align-items:center; gap:10px;"><div class="bar-wrap"><div class="bar-fill warn" style="width:60%;"></div></div> <span>60%</span></div></div>
+                            <div class="row"><span>기획팀</span><div style="display:flex; align-items:center; gap:10px;"><div class="bar-wrap"><div class="bar-fill danger" style="width:40%;"></div></div> <span>40%</span></div></div>
+                            <div class="row"><span>QA팀</span><div style="display:flex; align-items:center; gap:10px;"><div class="bar-wrap"><div class="bar-fill" style="width:80%;"></div></div> <span>80%</span></div></div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="box">
+                            <h4>📊 영역별 만족도 평균</h4>
+                            <div class="row"><span>Q1 전체 만족도</span> <b>⭐ 4.2점</b></div>
+                            <div class="row"><span>Q2 교육 영상 유익성</span> <b>⭐ 3.9점</b></div>
+                            <div class="row"><span>Q3 난이도 적절성</span> <b>⭐ 3.2점</b></div>
+                            <div class="row"><span>Q4 학습 효과</span> <b>⭐ 4.1점</b></div>
+                            <div class="row"><span>Q5 재참여 의향</span> <b>⭐ 4.0점</b></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="box">
+                        <h4>📋 시나리오별 완료 현황</h4>
+                        <div class="row" style="font-family: monospace; color: #444;"><span>AI 채용 편향</span> <span>[✅ 완료 55%] [🔄 재도전 후 완료 27%] [🎲 전환 18%]</span></div>
+                        <div class="row" style="font-family: monospace; color: #444;"><span>내부 코드 GPT 입력</span> <span>[✅ 완료 40%] [🔄 재도전 후 완료 35%] [🎲 전환 25%]</span></div>
+                        <div class="row" style="font-family: monospace; color: #444;"><span>Copilot 무검증</span> <span>[✅ 완료 50%] [🔄 재도전 후 완료 30%] [🎲 전환 20%]</span></div>
+                        <div class="row" style="font-family: monospace; color: #ef4444;"><span>AI 오류 무시 출시</span> <span>[✅ 완료 30%] [🔄 재도전 후 완료 25%] [🎲 전환 45%]</span></div>
+                        <div class="row" style="font-family: monospace; color: #444;"><span>추천 알고리즘 차별</span> <span>[✅ 완료 45%] [🔄 재도전 후 완료 33%] [🎲 전환 22%]</span></div>
+                    </div>
+                    <p style="color:#b45309; background:#fffbeb; padding:12px; border-radius:8px; border:1px solid #fde68a; font-size:0.9rem; margin-top:16px;">
+                        ⚠️ <b>[AI 오류 무시 출시]</b> 시나리오는 타 시나리오 포기율 (전환 전환율)이 가장 높습니다. 난이도 조정을 검토해보세요.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="box" style="display:flex; align-items:center; justify-content:space-around;">
+                        <div style="text-align: center;">
+                            <h4 style="border:none; margin-bottom:8px;">유형별 비율</h4>
+                            <div class="chart-circle"></div>
+                        </div>
+                        <div style="flex: 0.6; display: flex; flex-direction: column; gap: 8px;">
+                            <div class="row" style="margin:0;"><span>🔍 증거 제시형</span> <b style="color:#3b82f6;">35%</b></div>
+                            <div class="row" style="margin:0;"><span>⚠️ 리스크 경고형</span> <b style="color:#ef4444;">25%</b></div>
+                            <div class="row" style="margin:0;"><span>💬 질문 유도형</span> <b style="color:#f59e0b;">15%</b></div>
+                            <div class="row" style="margin:0;"><span>🤝 공감 유도형</span> <b style="color:#10b981;">12%</b></div>
+                            <div class="row" style="margin:0;"><span>⚖️ 원칙 강조형</span> <b style="color:#8b5cf6;">8%</b></div>
+                            <div class="row" style="margin:0;"><span>💡 관계 기반형</span> <b style="color:#4b5563;">5%</b></div>
+                        </div>
+                    </div>
+                    <p style="color:#1e40af; background:#eff6ff; padding:12px; border-radius:8px; border:1px solid #bfdbfe; font-size:0.9rem; margin-top:16px;">
+                        💡 <b>[관계 기반형]</b> 설득 스타일 비율이 가장 낮습니다. 향후 커리큘럼에서 팀워크와 신뢰 기반의 소통 역량 강화 교육 편성을 고려해보세요.
+                    </p>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</body>
+</html>

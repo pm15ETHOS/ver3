@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHOS - 교육 영상</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/app.js"></script>
+    <style>
+        .video-box {
+            background-color: #1e212b;
+            height: 450px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-status {
+            float: right;
+            color: var(--primary);
+            background: #f0fcf9;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .progress-ui {
+            position: absolute;
+            bottom: 24px;
+            left: 24px;
+            right: 24px;
+        }
+
+        .p-bar {
+            height: 6px;
+            background: #444;
+            border-radius: 3px;
+            width: 100%;
+        }
+
+        .p-fill {
+            height: 100%;
+            width: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            animation: fillBar 2s ease-in-out;
+        }
+
+        .p-time {
+            margin-top: 8px;
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        @keyframes fillBar {
+            from {
+                width: 0%;
+            }
+
+            to {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar"></div>
+
+        <!-- Main -->
+        <div class="main-area">
+            <div class="topbar" id="topbar"></div>
+
+            <div class="page-content" style="max-width: 900px; margin: 0 auto; width: 100%;">
+
+                <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 20px;">
+                    <div>
+                        <div class="text-gray" style="font-weight:600; margin-bottom:4px;" id="stage-label">현재 단계: AI 윤리
+                            개념 영상</div>
+                        <h2 id="video-title">AI 윤리 개념</h2>
+                        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 12px; margin-top: 12px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.6;"
+                            id="video-desc">
+                            AI 활용 시 투명성과 공식 규칙의 중요성을 다룹니다.
+                        </div>
+                    </div>
+                    <div class="video-status" id="video-status">영상 시청 중 (1/6)</div>
+                </div>
+
+                <div class="video-box" id="video-container">
+                    <video id="edu-video" controls
+                        style="width: 100%; height: 100%; border-radius: 12px; display: none;" playsinline>
+                        <source src="" type="video/mp4">
+                        브라우저가 비디오 태그를 지원하지 않습니다.
+                    </video>
+                    <div id="video-placeholder" style="text-align: center;">
+                        <div style="font-size:3.5rem; margin-bottom:16px;">📹</div>
+                        <h3 style="margin-bottom:8px;">교육 영상</h3>
+                        <p style="color:#aaa;" id="video-title-inner">AI 윤리 개념</p>
+                    </div>
+                </div>
+
+                <div id="video-complete-msg"
+                    style="background-color: #f0fcf9; padding: 16px; border-radius: 12px; border: 1px solid #bfece4; margin-bottom: 24px; color: var(--success-text); display:none; gap:10px; align-items:center;">
+                    <span>✅</span>
+                    <span style="font-weight:500;" id="msg-text">영상 시청을 완료하셨습니다. 학습을 계속 진행해주세요.</span>
+                </div>
+
+                <button class="btn btn-primary" style="width:100%; padding:14px; font-size:1.05rem;" id="next-btn"
+                    onclick="nextVideo()">바로 다음으로 이동</button>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const VIDEOS = [
+            {
+                title: "AI 윤리 개념",
+                desc: "AI 활용 시 투명성과 공식 규칙의 중요성을 다룹니다.",
+                src: "assets/video/video1.mp4"
+            },
+            {
+                title: "AI 프라이버시",
+                desc: "개인정보 동의 없는 데이터 수집 및 학습의 위험성을 배웁니다.",
+                src: "assets/video/video2.mp4"
+            },
+            {
+                title: "정보 보호",
+                desc: "사내 소스코드나 고객 데이터를 AI에 입력할 때 발생하는 유출 사례를 확인합니다.",
+                src: "assets/video/video3.mp4"
+            },
+            {
+                title: "할루시네이션",
+                desc: "AI가 그럴듯한 거짓말을 만들어내는 환각 현상의 한계와 개발자의 검증 책임을 알아봅니다.",
+                src: "assets/video/video4.mp4"
+            },
+            {
+                title: "알고리즘 편향",
+                desc: "데이터의 구조적 차별이 AI 모델에 그대로 반영되는 자동화 편향의 위험성을 학습합니다.",
+                src: "assets/video/video5.mp4"
+            },
+            {
+                title: "AI 사용 명시",
+                desc: "고객이나 사용자에게 AI 사용 여부를 투명하게 고지해야 하는 법적/윤리적 이유를 배웁니다.",
+                src: "assets/video/video6.mp4"
+            }
+        ];
+
+        let vIdx = parseInt(localStorage.getItem('ethos_video_idx') || '0', 10);
+        let advanceTimer = null;
+
+        const videoEl = document.getElementById('edu-video');
+        const placeholderEl = document.getElementById('video-placeholder');
+        const completeMsg = document.getElementById('video-complete-msg');
+        const nextBtn = document.getElementById('next-btn');
+
+        function renderVideoInfo() {
+            if (advanceTimer) {
+                clearTimeout(advanceTimer);
+                advanceTimer = null;
+            }
+
+            if (vIdx >= VIDEOS.length) {
+                State.setStage(2);
+                window.location.href = 'chatbot.html';
+                return;
+            }
+
+            const currentObj = VIDEOS[vIdx];
+            document.getElementById('stage-label').innerText = `현재 단계: ${currentObj.title} 영상`;
+            document.getElementById('video-title').innerText = currentObj.title;
+            document.getElementById('video-title-inner').innerText = currentObj.title;
+            document.getElementById('video-desc').innerText = currentObj.desc;
+            document.getElementById('video-status').innerText = `영상 시청 중 (${vIdx + 1}/${VIDEOS.length})`;
+
+            if (vIdx < VIDEOS.length - 1) {
+                nextBtn.innerText = "다음 영상으로 이동";
+            } else {
+                nextBtn.innerText = "시나리오 시뮬레이터로 이동 →";
+            }
+
+            // Video Source handling
+            if (currentObj.src) {
+                videoEl.src = currentObj.src;
+                videoEl.style.display = 'block';
+                placeholderEl.style.display = 'none';
+                completeMsg.style.display = 'none';
+                nextBtn.disabled = true;
+                nextBtn.style.opacity = '0.5';
+
+                console.log("Video source set. 11s wait enabled.");
+
+                // Auto-play the next video if it's not the first one (or as per user request to ' 바로 재생')
+                // Note: Browser might block auto-play without user interaction, 
+                // but since the user just clicked 'Next', it should be allowed.
+                videoEl.play().catch(e => console.log("Auto-play blocked, waiting for manual play:", e));
+
+            } else {
+                videoEl.style.display = 'none';
+                placeholderEl.style.display = 'block';
+                document.getElementById('video-title-inner').innerHTML = `${currentObj.title}<br><span style="font-size:0.9rem; color:#f0a0a0;">(영상이 준비 중입니다)</span>`;
+                completeMsg.style.display = 'none';
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+            }
+
+            renderSidebar();
+        }
+
+        // Timer triggers only when video actually starts playing
+        videoEl.onplay = function () {
+            if (advanceTimer) return;
+
+            console.log("Playback started. 10s timer beginning...");
+            advanceTimer = setTimeout(() => {
+                console.log("10 seconds passed, pausing and enabling manual skip...");
+                videoEl.pause(); // Stop the current video
+                nextBtn.disabled = false;
+                nextBtn.style.opacity = '1';
+                completeMsg.style.display = 'flex';
+            }, 11000);
+        };
+
+        videoEl.onended = function () {
+            if (advanceTimer) {
+                clearTimeout(advanceTimer);
+                advanceTimer = null;
+            }
+            console.log("Video ended, enabling skip...");
+            nextBtn.disabled = false;
+            nextBtn.style.opacity = '1';
+            completeMsg.style.display = 'flex';
+            document.getElementById('msg-text').innerText = "영상 시청을 완료하셨습니다. 버튼을 눌러 이동해주세요.";
+        };
+
+        function nextVideo() {
+            // Stop current video and clear timer
+            videoEl.pause();
+            if (advanceTimer) {
+                clearTimeout(advanceTimer);
+                advanceTimer = null;
+            }
+
+            if (vIdx < VIDEOS.length - 1) {
+                vIdx++;
+                localStorage.setItem('ethos_video_idx', vIdx.toString());
+                renderVideoInfo(); // Will trigger auto-play within it
+                window.scrollTo(0, 0);
+            } else {
+                State.setStage(2);
+                window.location.href = 'chatbot.html';
+            }
+        }
+
+        // Delay checking auth and rendering slightly to ensure global script loaded
+        setTimeout(() => {
+            renderVideoInfo();
+        }, 50);
+    </script>
+</body>
+
+</html>

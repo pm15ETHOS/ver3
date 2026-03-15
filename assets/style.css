@@ -1,0 +1,248 @@
+/* assets/style.css */
+
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css');
+
+:root {
+    --bg-color: #f3f4f6;
+    --header-bg: #ffffff;
+    --primary: #009b84; 
+    --primary-hover: #007d6a;
+    --text-main: #111827;
+    --text-muted: #6b7280;
+    --border-color: #e5e7eb;
+    --sidebar-bg: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        height: auto;
+        overflow: auto;
+    }
+}
+
+/* Layout */
+.app-container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 300px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid var(--border-color);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        max-height: 300px;
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        order: 2; /* Move sidebar below content on mobile or keep it for navigation */
+        padding: 16px;
+    }
+}
+
+.sidebar h3 {
+    font-size: 1.1rem;
+    color: var(--text-main);
+    margin-bottom: 4px;
+}
+
+.sidebar-sub {
+    color: var(--text-muted);
+    font-size: 0.8em;
+    margin-bottom: 20px;
+}
+
+.progress-section {
+    margin-bottom: 30px;
+}
+
+.progress-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+.progress-percent {
+    color: var(--primary);
+}
+
+.progress-bar-bg {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.curriculum-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.curr-group-title {
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+.curr-group.active .curr-group-title { color: var(--primary); }
+.curr-group.done .curr-group-title { color: var(--text-muted); }
+.curr-group.upcoming .curr-group-title { color: var(--text-muted); opacity: 0.7; }
+
+.curr-items {
+    padding-left: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.9rem;
+}
+.curr-item { display: flex; align-items: center; gap: 6px; }
+.curr-item.active { font-weight: 600; color: var(--text-main); }
+.curr-item.done { color: var(--primary); }
+.curr-item.upcoming { color: var(--text-muted); opacity: 0.5; }
+
+/* Main Content Area */
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Topbar */
+.topbar {
+    background: var(--header-bg);
+    padding: 16px 32px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 72px;
+    flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+    .topbar {
+        padding: 12px 16px;
+        height: auto;
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-start;
+    }
+    .topbar-right {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.logo-icon {
+    width: 40px; height: 40px;
+    background: var(--primary);
+    color: white;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: bold; font-size: 1.2rem;
+}
+
+.topbar-title h4 { margin: 0; font-size: 1.1rem; }
+.topbar-title span { color: var(--text-muted); font-size: 0.85rem; }
+
+.topbar-right {
+    display: flex;
+    gap: 12px;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    text-align: center;
+}
+
+.btn-primary {
+    background: var(--primary);
+    color: white;
+}
+.btn-primary:hover { background: var(--primary-hover); transform: translateY(-1px); }
+
+.btn-secondary {
+    background: white;
+    color: #333;
+    border: 1px solid #ccc;
+}
+.btn-secondary:hover { border-color: #999; }
+
+/* Page Content Base */
+.page-content {
+    padding: 32px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .page-content {
+        padding: 16px;
+    }
+}
+
+/* Cards */
+.card {
+    background: white;
+    border-radius: 12px;
+    padding: 24px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+}
+
+.text-center { text-align: center; }
+.mt-4 { margin-top: 1rem; }
+.mt-8 { margin-top: 2rem; }
+.mb-4 { margin-bottom: 1rem; }
+.text-gray { color: var(--text-muted); }

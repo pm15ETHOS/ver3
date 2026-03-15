@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ETHOS - AI 윤리 교육 챗봇</title>
+    <link rel="stylesheet" href="assets/style.css">
+    <script src="assets/app.js"></script>
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 60px auto;
+        }
+        .login-tabs {
+            display: flex;
+            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+        .login-tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--text-muted);
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+        }
+        .login-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 0.95rem;
+            outline: none;
+            transition: 0.2s;
+        }
+        .form-group input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0,155,132,0.1);
+        }
+        .login-form { display: none; }
+        .login-form.active { display: block; animation: slideUpFade 0.3s ease-out; }
+        @keyframes slideUpFade { from { transform: translateY(10px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body style="display: block; overflow-y: auto;">
+    <div style="text-align: center; margin-top: 60px;">
+        <img src="assets/logo.png" alt="ETHOS Logo" style="width: 200px; margin-bottom: 20px;">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 10px;">ETHOS AI 윤리 교육 챗봇</h2>
+        <p style="color: var(--text-muted);">교육을 시작하기 위해 정보를 입력해주세요</p>
+    </div>
+
+    <div class="login-container card">
+        <div class="login-tabs">
+            <div class="login-tab active" onclick="switchTab('user')">👤 사용자 로그인</div>
+            <div class="login-tab" onclick="switchTab('admin')">🛡️ 관리자 로그인</div>
+        </div>
+
+        <form id="form-user" class="login-form active" onsubmit="handleUserLogin(event)">
+            <div class="form-group">
+                <label>이름</label>
+                <input type="text" id="u-name" placeholder="홍길동" required>
+            </div>
+            <div class="form-group">
+                <label>부서</label>
+                <input type="text" id="u-dept" placeholder="개발팀" required>
+            </div>
+            <div class="form-group">
+                <label>이메일</label>
+                <input type="email" id="u-email" placeholder="example@company.com" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">접속하기</button>
+        </form>
+
+        <form id="form-admin" class="login-form" onsubmit="handleAdminLogin(event)">
+            <div class="form-group">
+                <label>관리자 아이디</label>
+                <input type="text" id="a-id" required>
+            </div>
+            <div class="form-group">
+                <label>비밀번호</label>
+                <input type="password" id="a-pw" required>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">접속하기</button>
+        </form>
+    </div>
+
+    <script>
+        function switchTab(type) {
+            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.login-form').forEach(f => f.classList.remove('active'));
+            
+            if(type === 'user') {
+                document.querySelectorAll('.login-tab')[0].classList.add('active');
+                document.getElementById('form-user').classList.add('active');
+            } else {
+                document.querySelectorAll('.login-tab')[1].classList.add('active');
+                document.getElementById('form-admin').classList.add('active');
+            }
+        }
+
+        function handleUserLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('u-name').value;
+            const dept = document.getElementById('u-dept').value;
+            const email = document.getElementById('u-email').value;
+            
+            State.setUser({ name, dept, email, isAdmin: false });
+            State.setStage(0);
+            window.location.href = 'intro.html';
+        }
+
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            State.setUser({ name: "관리자", dept: "HR/어드민", email: "admin", isAdmin: true });
+            window.location.href = 'admin.html';
+        }
+    </script>
+</body>
+</html>
